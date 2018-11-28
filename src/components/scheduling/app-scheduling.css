@@ -1,0 +1,52 @@
+.date-picker-container {
+    display: block;
+    margin: auto;
+    width: 100%;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.week-days-header {
+    display: block;
+}
+
+.week-days-header span {
+    float: right;
+}
+
+.week-days-container {
+    display: block;
+    text-align: center;
+}
+
+.week-days-ctrl {
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+}
+
+.week-days-ctrl:first-child {
+    float: left;
+}
+
+.week-days-ctrl:last-child {
+    float: right;
+}
+
+.week-days {
+    display: inline-block;
+    text-align: center;
+    padding: 0 2%;
+}
+
+.highlight-selected-date {
+    background-color: bisque;
+}
+
+.invalid-date {
+    color: darkgrey;
+}
+
+.schedules {
+    padding: 5px;
+}

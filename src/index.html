@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Date & Time Scheduling Component</title>
+  <script src="/build/appscheduling.js"></script>
+
+  <script>
+    setTimeout(function() {
+      let myRatingComponent = document.getElementById("myRatingComponent");
+      myRatingComponent.data = [
+        (new Date('2018-11-28')), (new Date('2018-11-29')), (new Date('2018-12-01'))
+      ];
+      myRatingComponent.addEventListener("onScheduleUpdated", function (event) {
+        alert(event.detail.value);
+      })
+    }, 5000)
+  </script>
+</head>
+<body>
+
+  <app-scheduling id="myRatingComponent" (onScheduleUpdated)=""></app-scheduling>
+
+</body>
+</html>
