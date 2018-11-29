@@ -1,0 +1,60 @@
+.week-days-header {
+  display: block;
+  padding-bottom: 12px;
+}
+
+.week-days-header span {
+  float: right;
+  color: #586268;
+}
+
+.week-days-header span,
+.week-days-header label {
+  color: #586268;
+}
+
+.week-days-container {
+  position: relative;
+  display: block;
+  text-align: center;
+}
+
+.week-days-ctrl {
+  position: absolute;
+  display: inline-block;
+  height: 52px;
+  width: 28px;
+  line-height: 52px;
+}
+
+.week-days-ctrl:first-child {
+  left: -12px;
+}
+
+.week-days-ctrl:last-child {
+  right: -12px;
+}
+
+.week-days {
+  display: inline-block;
+  text-align: center;
+  padding: 0 2%;
+}
+
+.week-days .name {
+  color: #a0a2a4;
+  padding-bottom: 8px;
+}
+
+.week-days .date-number {
+  background-color: #eff0f2;
+  color: #586268;
+  min-width: 20px;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.week-days .invalid-date {
+  background-color: unset;
+  color: #a0a2a4;
+}

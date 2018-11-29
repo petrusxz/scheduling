@@ -17,17 +17,38 @@ export namespace Components {
   }
   interface AppSchedulingAttributes extends StencilHTMLAttributes {
     'data'?: Date[];
-    'onOnScheduleUpdated'?: (event: CustomEvent) => void;
+  }
+
+  interface DatePicker {}
+  interface DatePickerAttributes extends StencilHTMLAttributes {
+    'onOnDateUpdated'?: (event: CustomEvent) => void;
+  }
+
+  interface ProfessionalPicker {}
+  interface ProfessionalPickerAttributes extends StencilHTMLAttributes {}
+
+  interface TimePicker {
+    'availableTimes': Date[];
+  }
+  interface TimePickerAttributes extends StencilHTMLAttributes {
+    'availableTimes'?: Date[];
+    'onOnTimeUpdated'?: (event: CustomEvent) => void;
   }
 }
 
 declare global {
   interface StencilElementInterfaces {
     'AppScheduling': Components.AppScheduling;
+    'DatePicker': Components.DatePicker;
+    'ProfessionalPicker': Components.ProfessionalPicker;
+    'TimePicker': Components.TimePicker;
   }
 
   interface StencilIntrinsicElements {
     'app-scheduling': Components.AppSchedulingAttributes;
+    'date-picker': Components.DatePickerAttributes;
+    'professional-picker': Components.ProfessionalPickerAttributes;
+    'time-picker': Components.TimePickerAttributes;
   }
 
 
@@ -37,12 +58,36 @@ declare global {
     new (): HTMLAppSchedulingElement;
   };
 
+  interface HTMLDatePickerElement extends Components.DatePicker, HTMLStencilElement {}
+  var HTMLDatePickerElement: {
+    prototype: HTMLDatePickerElement;
+    new (): HTMLDatePickerElement;
+  };
+
+  interface HTMLProfessionalPickerElement extends Components.ProfessionalPicker, HTMLStencilElement {}
+  var HTMLProfessionalPickerElement: {
+    prototype: HTMLProfessionalPickerElement;
+    new (): HTMLProfessionalPickerElement;
+  };
+
+  interface HTMLTimePickerElement extends Components.TimePicker, HTMLStencilElement {}
+  var HTMLTimePickerElement: {
+    prototype: HTMLTimePickerElement;
+    new (): HTMLTimePickerElement;
+  };
+
   interface HTMLElementTagNameMap {
     'app-scheduling': HTMLAppSchedulingElement
+    'date-picker': HTMLDatePickerElement
+    'professional-picker': HTMLProfessionalPickerElement
+    'time-picker': HTMLTimePickerElement
   }
 
   interface ElementTagNameMap {
     'app-scheduling': HTMLAppSchedulingElement;
+    'date-picker': HTMLDatePickerElement;
+    'professional-picker': HTMLProfessionalPickerElement;
+    'time-picker': HTMLTimePickerElement;
   }
 
 

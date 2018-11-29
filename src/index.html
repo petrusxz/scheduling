@@ -9,11 +9,16 @@
   <script>
     setTimeout(function() {
       let myRatingComponent = document.getElementById("myRatingComponent");
+      let a = new Date('2018-12-01');
+      a.setHours(23);
       myRatingComponent.data = [
-        (new Date('2018-11-28')), (new Date('2018-11-29')), (new Date('2018-12-01'))
+        (new Date('2018-11-28')), 
+        (new Date('2018-11-29')), 
+        (new Date('2018-12-01')), 
+        a
       ];
       myRatingComponent.addEventListener("onScheduleUpdated", function (event) {
-        alert(event.detail.value);
+        const res = event.detail.value;
       })
     }, 5000)
   </script>

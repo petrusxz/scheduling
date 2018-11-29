@@ -1,0 +1,16 @@
+.no-time {
+  display: table;
+  margin: auto;
+  color: #a0a2a4;
+}
+
+.schedule-time {
+  color: #586268;
+  padding: 5px 8px;
+  margin-right: 4px;
+  border-radius: 4px;
+}
+
+.schedule-time:last-child {
+  margin-right: 0;
+}
