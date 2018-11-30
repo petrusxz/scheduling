@@ -8,24 +8,27 @@
 
   <script>
     setTimeout(function() {
-      let myRatingComponent = document.getElementById("myRatingComponent");
-      let a = new Date('2018-12-01');
+      let myComponent = document.getElementById("myComponent");
+      let a = new Date('2018-12-03');
       a.setHours(23);
-      myRatingComponent.data = [
-        (new Date('2018-11-28')), 
-        (new Date('2018-11-29')), 
-        (new Date('2018-12-01')), 
-        a
+
+      let times = [(new Date('2018-12-01')), (new Date('2018-12-02')), (new Date('2018-12-03')), a];
+      myComponent.data = [
+        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, availableTimes: times.slice(0, 1) },
+        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, availableTimes: times },
+        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, availableTimes: times.slice(0, 2) },
       ];
-      myRatingComponent.addEventListener("onScheduleUpdated", function (event) {
-        const res = event.detail.value;
+
+      myComponent.addEventListener("onScheduleUpdated", function (event) {
+        const res = event.detail;
+        console.log(res);
       })
     }, 5000)
   </script>
 </head>
 <body>
 
-  <app-scheduling id="myRatingComponent" (onScheduleUpdated)=""></app-scheduling>
+  <app-scheduling id="myComponent" (onScheduleUpdated)=""></app-scheduling>
 
 </body>
 </html>

@@ -8,15 +8,22 @@
 import '@stencil/core';
 
 
+import {
+  SchedulingData,
+} from './models/scheduling-data.model';
+import {
+  Professional,
+} from './models/professional.model';
 
 
 export namespace Components {
 
   interface AppScheduling {
-    'data': Date[];
+    'data': SchedulingData[];
   }
   interface AppSchedulingAttributes extends StencilHTMLAttributes {
-    'data'?: Date[];
+    'data'?: SchedulingData[];
+    'onOnScheduleUpdated'?: (event: CustomEvent) => void;
   }
 
   interface DatePicker {}
@@ -24,8 +31,13 @@ export namespace Components {
     'onOnDateUpdated'?: (event: CustomEvent) => void;
   }
 
-  interface ProfessionalPicker {}
-  interface ProfessionalPickerAttributes extends StencilHTMLAttributes {}
+  interface ProfessionalPicker {
+    'professionals': Professional[];
+  }
+  interface ProfessionalPickerAttributes extends StencilHTMLAttributes {
+    'onOnProfessionalUpdated'?: (event: CustomEvent) => void;
+    'professionals'?: Professional[];
+  }
 
   interface TimePicker {
     'availableTimes': Date[];

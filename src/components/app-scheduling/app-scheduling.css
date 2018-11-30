@@ -5,7 +5,8 @@ body {
 .week-days-ctrl:hover,
 .week-days .date-number:hover,
 .week-days-header span:hover,
-.schedule-time:hover {
+.schedule-time:hover,
+.professional:hover {
   cursor: pointer;
 }
 
