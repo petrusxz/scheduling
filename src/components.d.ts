@@ -41,6 +41,7 @@ export namespace Components {
 
   interface TimePicker {
     'availableTimes': Date[];
+    'resetSchedules': () => void;
   }
   interface TimePickerAttributes extends StencilHTMLAttributes {
     'availableTimes'?: Date[];

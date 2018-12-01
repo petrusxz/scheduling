@@ -1,4 +1,4 @@
-import { Component, Prop, Listen, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Listen, State, Event, EventEmitter, Element } from '@stencil/core';
 import { SchedulingData } from '../../models/scheduling-data.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
 import { Professional } from '../../models/professional.model';
@@ -10,19 +10,23 @@ import { Professional } from '../../models/professional.model';
 })
 export class AppScheduling {
 
+  @Element() appSchedulingEl: HTMLElement;
+
   @Prop() data: SchedulingData[] = [];
 
   @State() professionals: Professional[] = [];
-
   @State() availableDates: Date[] = [];
   @State() availableTimes: Date[] = [];
-
   @State() scheduling: SchedulingResponse = new SchedulingResponse();
 
   @Event() onScheduleUpdated: EventEmitter;
 
   componentDidLoad(): void {
     this.professionals = this.data.map((el) => el.professional);
+    this.scheduling.professionalId = this.professionals[1].id;
+    this.availableDates = this.data[1].availableTimes;
+
+    this.handleOnDateUpdated();
   }
 
   @Listen('onProfessionalUpdated')
@@ -30,18 +34,24 @@ export class AppScheduling {
     const selectedProfessional = event.detail as Professional;
     this.scheduling.professionalId = selectedProfessional.id;
 
-    for(let i = 0; i < this.data.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].professional.id === selectedProfessional.id) {
         this.availableDates = this.data[i].availableTimes;
+        this.handleOnDateUpdated();
+        const timePickerEl = this.appSchedulingEl.querySelector('time-picker');
+        timePickerEl.resetSchedules();
         break;
       }
     }
   }
 
   @Listen('onDateUpdated')
-  handleOnDateUpdated(event: CustomEvent): void {
+  handleOnDateUpdated(event: CustomEvent = null): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     this.availableTimes = [];
-    const selectedDate = event.detail as Date;
+    const selectedDate: Date = event ? event.detail : today;
 
     const startDate = new Date(selectedDate);
     const endDate = new Date(startDate);

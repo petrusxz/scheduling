@@ -15,6 +15,10 @@ export class ProfessionalPicker {
 
     @Event() onProfessionalUpdated: EventEmitter;
 
+    componentWillLoad(): void {
+        this.selectedProfessionalId = this.professionals[1].id;
+    }
+
     private setSelectedProfessional(professional: Professional): void {
         this.selectedProfessionalId = professional.id;
 

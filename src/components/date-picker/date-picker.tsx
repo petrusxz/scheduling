@@ -39,14 +39,13 @@ export class DatePicker {
             date.setDate(weekDay.getDate() + 1);
         }
 
-        this.activeMonth = `${date.toLocaleDateString('en-US', { month: 'long' })} ${date.getFullYear()}`
+        this.activeMonth = `${date.toLocaleDateString('en-US', { month: 'long' })} ${date.getFullYear()}`;
+        this.selectedDate = this.days.find(e => !e.isReadonly).weekDay;
+        this.onDateUpdated.emit(this.selectedDate);
     }
 
     private previousWeek(): void {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (this.days[0].weekDay <= today) { return; }
+        if (this.isCurrentWeek()) { return; }
 
         const date = new Date(this.days[0].weekDay);
         date.setDate(date.getDate() - 1);
@@ -59,6 +58,13 @@ export class DatePicker {
         date.setDate(date.getDate() + 1);
 
         this.setWeekDays(date);
+    }
+
+    private isCurrentWeek(): boolean {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        return this.days[0].weekDay <= today;
     }
 
     private isSelectedDate(date: Date): boolean {
@@ -85,11 +91,12 @@ export class DatePicker {
                 </div>
 
                 <div class="week-days-container">
-                    <div
+                    <button
+                        disabled={this.isCurrentWeek()}
                         class="week-days-ctrl"
                         onClick={() => this.previousWeek()}>
                         &lt;
-                    </div>
+                    </button>
 
                     {this.days.map((day) =>
                         <div class="week-days">
@@ -106,11 +113,11 @@ export class DatePicker {
                         </div>
                     )}
 
-                    <div 
-                        class="week-days-ctrl" 
+                    <button
+                        class="week-days-ctrl"
                         onClick={() => this.nextWeek()}>
                         &gt;
-                    </div>
+                    </button>
                 </div>
             </div>
         );
