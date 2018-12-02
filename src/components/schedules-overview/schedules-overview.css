@@ -1,0 +1,72 @@
+.overview-container header {
+  height: 48px;
+  position: relative;
+  cursor: pointer;
+}
+
+.last-schedule {
+  display: inline-block;
+  height: 100%;
+  width: 82%;
+  position: absolute;
+  right: 0;
+  color: #586268;
+}
+
+.last-schedule label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #a0a2a4;
+  font-size: .9em;
+}
+
+.overview img {
+    height: 48px;
+    width: 48px;
+}
+
+figure.overview {
+  display: inline-block;
+  margin: 0;
+}
+
+.schedules-count {
+  display: inline-block;
+  background-color: #586268;
+  color: white;
+  width: 16px;
+  text-align: center;
+  padding: 2px;
+  border-radius: 50%;
+}
+
+.date-time-container {
+  position: relative;
+  width: 100%;
+  min-height: 35px;
+}
+
+.list {
+  margin-top: 10px;
+  padding-bottom: 6px;
+}
+
+.list:not(:last-child) {
+  border-bottom: 1px solid #dedede;
+}
+
+.date-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: .9em;
+  color: #a0a2a4;
+  width: 125px;
+}
+
+.time-view {
+  color: #586268;
+  text-align: right;
+  width: 100%;
+}

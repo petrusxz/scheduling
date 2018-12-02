@@ -54,7 +54,7 @@
   border-radius: 50%;
 }
 
-.week-days .invalid-date {
+.week-days .readonly {
   background-color: unset;
   color: #a0a2a4;
 }

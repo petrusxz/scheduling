@@ -1,5 +1,6 @@
-import { Component, State, Event, EventEmitter } from '@stencil/core';
+import { Component, State, Event, EventEmitter, Method } from '@stencil/core';
 import { Day } from '../../models/day.model';
+import { getDaysOfTheWeek } from '../../utils/calendar-handler';
 
 @Component({
     tag: 'date-picker',
@@ -14,32 +15,20 @@ export class DatePicker {
 
     @Event() onDateUpdated: EventEmitter;
 
+    @Method()
+    resetDates(): void {
+        this.setWeekDays();
+    }
+
     componentWillLoad(): void {
         this.setWeekDays();
     }
 
     private setWeekDays(dateParam: Date = new Date()): void {
-        this.days = [];
+        this.days = getDaysOfTheWeek(dateParam);
+        const lastDay = this.days[this.days.length - 1].weekDay;
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const date = dateParam;
-        date.setDate(date.getDate() - date.getDay());
-        date.setHours(0, 0, 0, 0);
-
-        for (let i = 0; i < 7; i++) {
-            const weekDay = new Date(date);
-            const shortName = weekDay.toLocaleDateString('en-US', { weekday: 'short' });
-            const dayNumber = weekDay.getDate();
-            const isReadonly = weekDay < today;
-
-            this.days.push({ weekDay, shortName, dayNumber, isReadonly });
-
-            date.setDate(weekDay.getDate() + 1);
-        }
-
-        this.activeMonth = `${date.toLocaleDateString('en-US', { month: 'long' })} ${date.getFullYear()}`;
+        this.activeMonth = `${lastDay.toLocaleDateString('en-US', { month: 'long' })} ${lastDay.getFullYear()}`;
         this.selectedDate = this.days.find(e => !e.isReadonly).weekDay;
         this.onDateUpdated.emit(this.selectedDate);
     }
@@ -95,7 +84,7 @@ export class DatePicker {
                         disabled={this.isCurrentWeek()}
                         class="week-days-ctrl"
                         onClick={() => this.previousWeek()}>
-                        &lt;
+                        &lang;
                     </button>
 
                     {this.days.map((day) =>
@@ -105,7 +94,7 @@ export class DatePicker {
                                 class={{
                                     'date-number': true,
                                     'selected': this.isSelectedDate(day.weekDay),
-                                    'invalid-date': day.isReadonly
+                                    'readonly': day.isReadonly
                                 }}
                                 onClick={() => this.setSelectedDate(day)}>
                                 {day.dayNumber}
@@ -116,7 +105,7 @@ export class DatePicker {
                     <button
                         class="week-days-ctrl"
                         onClick={() => this.nextWeek()}>
-                        &gt;
+                        &rang;
                     </button>
                 </div>
             </div>

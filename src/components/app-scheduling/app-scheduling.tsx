@@ -1,4 +1,4 @@
-import { Component, Prop, Listen, State, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, Prop, Listen, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
 import { SchedulingData } from '../../models/scheduling-data.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
 import { Professional } from '../../models/professional.model';
@@ -6,43 +6,50 @@ import { Professional } from '../../models/professional.model';
 @Component({
   tag: 'app-scheduling',
   styleUrl: 'app-scheduling.css',
-  shadow: false
+  shadow: true
 })
 export class AppScheduling {
 
   @Element() appSchedulingEl: HTMLElement;
 
-  @Prop() data: SchedulingData[] = [];
+  @Prop({ mutable: true }) schedulingData: SchedulingData[] = [];
 
   @State() professionals: Professional[] = [];
+  @State() selectedProfessional: Professional = null;
   @State() availableDates: Date[] = [];
   @State() availableTimes: Date[] = [];
   @State() scheduling: SchedulingResponse = new SchedulingResponse();
 
   @Event() onScheduleUpdated: EventEmitter;
 
-  componentDidLoad(): void {
-    this.professionals = this.data.map((el) => el.professional);
-    this.scheduling.professionalId = this.professionals[1].id;
-    this.availableDates = this.data[1].availableTimes;
+  @Watch('schedulingData')
+  schedulingDataOnChange() {
+    this.initialize();
+  }
 
-    this.handleOnDateUpdated();
+  componentDidLoad(): void {
+    this.initialize();
+  }
+
+  initialize(): void {
+    this.professionals = this.schedulingData.map((el) => el.professional);
+
+    if (this.professionals.length) {
+      this.scheduling.professionalId = this.professionals[0].id;
+      this.availableDates = this.schedulingData[0].availableTimes;
+
+      this.handleOnDateUpdated();
+    }
   }
 
   @Listen('onProfessionalUpdated')
   handleOnProfessionalUpdated(event: CustomEvent): void {
-    const selectedProfessional = event.detail as Professional;
-    this.scheduling.professionalId = selectedProfessional.id;
+    this.selectedProfessional = event.detail as Professional;
+    this.scheduling.professionalId = this.selectedProfessional.id;
 
-    for (let i = 0; i < this.data.length; i++) {
-      if (this.data[i].professional.id === selectedProfessional.id) {
-        this.availableDates = this.data[i].availableTimes;
-        this.handleOnDateUpdated();
-        const timePickerEl = this.appSchedulingEl.querySelector('time-picker');
-        timePickerEl.resetSchedules();
-        break;
-      }
-    }
+    this.availableDates = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id).availableTimes;
+    this.handleOnDateUpdated();
+    this.resetSelectedValues();
   }
 
   @Listen('onDateUpdated')
@@ -50,38 +57,58 @@ export class AppScheduling {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    this.availableTimes = [];
     const selectedDate: Date = event ? event.detail : today;
-
     const startDate = new Date(selectedDate);
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 1);
 
-    this.availableTimes = this.availableDates
-      .filter((schedule) => (schedule.getTime() >= startDate.getTime())
-        && (schedule.getTime() < endDate.getTime()));
+    this.availableTimes = this.availableDates.filter((schedule) =>
+      (schedule.getTime() >= startDate.getTime())
+      && (schedule.getTime() < endDate.getTime())
+    );
   }
 
   @Listen('onTimeUpdated')
   handleOnTimeUpdated(event: CustomEvent): void {
     const selectedDate = event.detail as Date;
-    const scheduleIndex = this.scheduling.schedules.findIndex(el => el.getTime() === selectedDate.getTime());
+    const schedulingHelper = Object.assign({}, this.scheduling);
+    const scheduleIndex = schedulingHelper.schedules.findIndex(el => el.getTime() === selectedDate.getTime());
 
     if (scheduleIndex !== -1) {
-      this.scheduling.schedules = this.scheduling.schedules.filter(e => e.getTime() !== selectedDate.getTime())
+      schedulingHelper.schedules = schedulingHelper.schedules.filter(e => e.getTime() !== selectedDate.getTime())
     } else {
-      this.scheduling.schedules.push(selectedDate);
+      schedulingHelper.schedules.push(selectedDate);
     }
+
+    this.scheduling = schedulingHelper;
+  }
+
+  private resetSelectedValues(): void {
+    const datePickerEl = this.appSchedulingEl.querySelector('date-picker');
+    const timePickerEl = this.appSchedulingEl.querySelector('time-picker');
+    datePickerEl.resetDates();
+    timePickerEl.resetSchedules();
+    this.scheduling.schedules = [];
   }
 
   render(): JSX.Element {
     return (
-      <div>
+      <div class="app-container">
+        {this.scheduling.schedules.length > 0 &&
+          <schedules-overview professional={this.selectedProfessional} scheduling={this.scheduling}></schedules-overview>
+        }
+
         <professional-picker professionals={this.professionals}></professional-picker>
         <date-picker></date-picker>
         <time-picker availableTimes={this.availableTimes}></time-picker>
 
-        <button onClick={() => this.onScheduleUpdated.emit(this.scheduling)}>Finish</button>
+        {this.scheduling.schedules.length > 0 &&
+          <button 
+            class="confirm"
+            onClick={() => this.onScheduleUpdated.emit(this.scheduling)}>
+            Confirm
+          </button>
+        }
       </div>
     );
   }

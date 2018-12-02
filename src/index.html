@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
@@ -7,28 +8,28 @@
   <script src="/build/appscheduling.js"></script>
 
   <script>
-    setTimeout(function() {
+    setTimeout(() => {
       let myComponent = document.getElementById("myComponent");
-      let a = new Date('2018-12-03');
-      a.setHours(23);
+        let a = new Date('2018-12-03');
+        a.setHours(23);
 
-      let times = [(new Date('2018-12-01')), (new Date('2018-12-02')), (new Date('2018-12-03')), a];
-      myComponent.data = [
-        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, availableTimes: times.slice(0, 1) },
-        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, availableTimes: times },
-        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, availableTimes: times.slice(0, 2) },
-      ];
+        let times = [(new Date('2018-12-04')), (new Date('2018-12-04')), (new Date('2018-12-03')), a];
+        myComponent.schedulingData = [
+          { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, availableTimes: times.slice(0, 1) },
+          { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, availableTimes: times },
+          { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, availableTimes: times.slice(0, 2) },
+        ];
 
-      myComponent.addEventListener("onScheduleUpdated", function (event) {
-        const res = event.detail;
-        console.log(res);
-      })
-    }, 5000)
+        myComponent.addEventListener("onScheduleUpdated", function (event) {
+          const res = event.detail;
+          console.log(res);
+        })
+    }, 5000);
   </script>
 </head>
+
 <body>
-
-  <app-scheduling id="myComponent" (onScheduleUpdated)=""></app-scheduling>
-
+  <app-scheduling id="myComponent"></app-scheduling>
 </body>
+
 </html>

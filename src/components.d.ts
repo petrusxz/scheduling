@@ -14,19 +14,24 @@ import {
 import {
   Professional,
 } from './models/professional.model';
+import {
+  SchedulingResponse,
+} from './models/scheduling-response.model';
 
 
 export namespace Components {
 
   interface AppScheduling {
-    'data': SchedulingData[];
+    'schedulingData': SchedulingData[];
   }
   interface AppSchedulingAttributes extends StencilHTMLAttributes {
-    'data'?: SchedulingData[];
     'onOnScheduleUpdated'?: (event: CustomEvent) => void;
+    'schedulingData'?: SchedulingData[];
   }
 
-  interface DatePicker {}
+  interface DatePicker {
+    'resetDates': () => void;
+  }
   interface DatePickerAttributes extends StencilHTMLAttributes {
     'onOnDateUpdated'?: (event: CustomEvent) => void;
   }
@@ -37,6 +42,15 @@ export namespace Components {
   interface ProfessionalPickerAttributes extends StencilHTMLAttributes {
     'onOnProfessionalUpdated'?: (event: CustomEvent) => void;
     'professionals'?: Professional[];
+  }
+
+  interface SchedulesOverview {
+    'professional': Professional;
+    'scheduling': SchedulingResponse;
+  }
+  interface SchedulesOverviewAttributes extends StencilHTMLAttributes {
+    'professional'?: Professional;
+    'scheduling'?: SchedulingResponse;
   }
 
   interface TimePicker {
@@ -54,6 +68,7 @@ declare global {
     'AppScheduling': Components.AppScheduling;
     'DatePicker': Components.DatePicker;
     'ProfessionalPicker': Components.ProfessionalPicker;
+    'SchedulesOverview': Components.SchedulesOverview;
     'TimePicker': Components.TimePicker;
   }
 
@@ -61,6 +76,7 @@ declare global {
     'app-scheduling': Components.AppSchedulingAttributes;
     'date-picker': Components.DatePickerAttributes;
     'professional-picker': Components.ProfessionalPickerAttributes;
+    'schedules-overview': Components.SchedulesOverviewAttributes;
     'time-picker': Components.TimePickerAttributes;
   }
 
@@ -83,6 +99,12 @@ declare global {
     new (): HTMLProfessionalPickerElement;
   };
 
+  interface HTMLSchedulesOverviewElement extends Components.SchedulesOverview, HTMLStencilElement {}
+  var HTMLSchedulesOverviewElement: {
+    prototype: HTMLSchedulesOverviewElement;
+    new (): HTMLSchedulesOverviewElement;
+  };
+
   interface HTMLTimePickerElement extends Components.TimePicker, HTMLStencilElement {}
   var HTMLTimePickerElement: {
     prototype: HTMLTimePickerElement;
@@ -93,6 +115,7 @@ declare global {
     'app-scheduling': HTMLAppSchedulingElement
     'date-picker': HTMLDatePickerElement
     'professional-picker': HTMLProfessionalPickerElement
+    'schedules-overview': HTMLSchedulesOverviewElement
     'time-picker': HTMLTimePickerElement
   }
 
@@ -100,6 +123,7 @@ declare global {
     'app-scheduling': HTMLAppSchedulingElement;
     'date-picker': HTMLDatePickerElement;
     'professional-picker': HTMLProfessionalPickerElement;
+    'schedules-overview': HTMLSchedulesOverviewElement;
     'time-picker': HTMLTimePickerElement;
   }
 

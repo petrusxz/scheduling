@@ -1,21 +1,16 @@
 import { AppScheduling } from './app-scheduling';
 
-describe('my-component', () => {
+describe('app-scheduling', () => {
   it('builds', () => {
     expect(new AppScheduling()).toBeTruthy();
   });
 
-  describe('formatting', () => {
-    // it('returns empty string for no names defined', () => {
-    //   const component = new AppScheduling();
-    //   expect(component.toEqual('');
-    // });
-
-    // it('formats just first names', () => {
-    //   const component = new AppScheduling();
-    //   component.first = 'Joseph';
-    //   expect(component.format()).toEqual('Joseph');
-    // });
+  describe('initial values for the States', () => {
+    it('initializes empty values', () => {
+      const component = new AppScheduling();
+      component.initialize();
+      expect(component.scheduling.schedules).toEqual([]);
+    });
 
     // it('formats first and last names', () => {
     //   const component = new AppScheduling();

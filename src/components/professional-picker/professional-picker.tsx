@@ -12,16 +12,30 @@ export class ProfessionalPicker {
     @Prop({ mutable: true }) professionals: Professional[] = [];
 
     @State() selectedProfessionalId: string = null;
+    @State() professionalsRefined: Array<{ professional: Professional, img: string }> = [];
 
     @Event() onProfessionalUpdated: EventEmitter;
 
     componentWillLoad(): void {
-        this.selectedProfessionalId = this.professionals[1].id;
+        if (!this.professionals.length) { return; }
+    
+        this.selectedProfessionalId = this.professionals[0].id;
+        this.handlingProfessionalsImg();
+    }
+
+    private handlingProfessionalsImg(): void {
+        this.professionalsRefined = [];
+
+        this.professionals.map((professional) => {
+            imageHandler(professional.picture)
+                .then((img) => {
+                    this.professionalsRefined = [...this.professionalsRefined, { professional, img }];
+                });
+        });
     }
 
     private setSelectedProfessional(professional: Professional): void {
         this.selectedProfessionalId = professional.id;
-
         this.onProfessionalUpdated.emit(professional);
     }
 
@@ -34,22 +48,16 @@ export class ProfessionalPicker {
     render(): JSX.Element {
         return (
             <div class="picker-container">
-                {this.professionals.map((professional) => {
-                    const imgSrc = imageHandler(professional.picture) || 'assets/user.svg';
-
-                    return (
-                        <figure
-                            class="professional"
-                            onClick={() => this.setSelectedProfessional(professional)}>
-                            <img
-                                class={{
-                                    'selected': this.isSelectedProfessional(professional.id)
-                                }}
-                                src={imgSrc} />
-                            <figcaption>{professional.name}</figcaption>
-                        </figure>
-                    )
-                })}
+                {this.professionalsRefined.map(element =>
+                    <figure
+                        class="professional"
+                        onClick={() => this.setSelectedProfessional(element.professional)}>
+                        <img
+                            class={{ 'selected': this.isSelectedProfessional(element.professional.id) }}
+                            src={element.img} />
+                        <figcaption>{element.professional.name}</figcaption>
+                    </figure>
+                )}
             </div>
         );
     }

@@ -1,13 +1,6 @@
-.professional {
-  display: inline-block;
-  margin: 0 6px;
-  width: 50px;
-  text-align: center;
-}
-
 .professional img {
+  height: 42px;
   width: 42px;
-  border-radius: 50%;
   padding: 2px;
 }
 
