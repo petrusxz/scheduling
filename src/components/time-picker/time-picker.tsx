@@ -1,6 +1,9 @@
 import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { manageSelectedDate } from '../../utils/calendar-handler';
 
+/**
+ * @description List of available times from the selected professional.
+ */
 @Component({
     tag: 'time-picker',
     styleUrl: 'time-picker.css',

@@ -2,6 +2,9 @@ import { Component, State, Event, EventEmitter, Method } from '@stencil/core';
 import { Day } from '../../models/day.model';
 import { getDaysOfTheWeek } from '../../utils/calendar-handler';
 
+/**
+ * @description Weekly calendar working as day picker to load equivalent available schedules.
+ */
 @Component({
     tag: 'date-picker',
     styleUrl: 'date-picker.css',
@@ -24,6 +27,9 @@ export class DatePicker {
         this.setWeekDays();
     }
 
+    /**
+     * @description Renders days of the week for the parameter date.
+     */
     private setWeekDays(dateParam: Date = new Date()): void {
         this.days = getDaysOfTheWeek(dateParam);
         const lastDay = this.days[this.days.length - 1].weekDay;

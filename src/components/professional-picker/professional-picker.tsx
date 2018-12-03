@@ -2,6 +2,9 @@ import { Component, Prop, Event, EventEmitter, State, Watch } from '@stencil/cor
 import { imageHandler } from '../../utils/image-handler';
 import { Professional } from '../../models/professional.model';
 
+/**
+ * @description List of all professionals available.
+ */
 @Component({
     tag: 'professional-picker',
     styleUrl: 'professional-picker.css',
@@ -31,6 +34,10 @@ export class ProfessionalPicker {
         }
     }
 
+    /**
+     * @description Optimizing images for each professional. In case of a professional without a picture,
+     * sets a default user image.
+     */
     private handlingProfessionalsImg(): void {
         this.professionalsRefined = [];
 

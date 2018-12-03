@@ -4,6 +4,10 @@ import { SchedulingResponse } from '../../models/scheduling-response.model';
 import { Professional } from '../../models/professional.model';
 import { manageSelectedDate } from '../../utils/calendar-handler';
 
+/**
+ * @description App entry point called at index.html and used as a 
+ * tag <app-scheduling></app-scheduling>.
+ */
 @Component({
   tag: 'app-scheduling',
   styleUrl: 'app-scheduling.css',
@@ -23,6 +27,9 @@ export class AppScheduling {
 
   @Event() onScheduleUpdated: EventEmitter;
 
+  /**
+   * @description Watching for changes to re-initialize the component.
+   */
   @Watch('schedulingData')
   schedulingDataOnChange() {
     this.initialize();
@@ -32,6 +39,9 @@ export class AppScheduling {
     this.initialize();
   }
 
+  /**
+   * @description Assigning values to separated variables to facilitate data management for each child component.
+   */
   private initialize(): void {
     this.professionals = this.schedulingData.map((el) => el.professional);
 
@@ -44,6 +54,10 @@ export class AppScheduling {
     }
   }
 
+  /**
+   * @description Listening EventEmitter from professional-picker component, 
+   * then handling values to filter the available dates for the selected professional.
+   */
   @Listen('onProfessionalUpdated')
   handleOnProfessionalUpdated(event: CustomEvent): void {
     this.selectedProfessional = event.detail as Professional;
@@ -54,6 +68,10 @@ export class AppScheduling {
     this.resetSelectedValues();
   }
 
+  /**
+   * @description Listening EventEmitter from date-picker component, 
+   * then handling values to filter the available times for the selected day.
+   */
   @Listen('onDateUpdated')
   handleOnDateUpdated(event: CustomEvent = null): void {
     const today = new Date();
@@ -70,6 +88,10 @@ export class AppScheduling {
     );
   }
 
+  /**
+   * @description Listening EventEmitter from date-picker component, 
+   * then assigning the schedules to response object.
+   */
   @Listen('onTimeUpdated')
   handleOnTimeUpdated(event: CustomEvent): void {
     const selectedDate = event.detail as Date;
