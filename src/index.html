@@ -8,23 +8,31 @@
   <script src="/build/appscheduling.js"></script>
 
   <script>
-    setTimeout(() => {
+    window.onload = function () {
       let myComponent = document.getElementById("myComponent");
-        let a = new Date('2018-12-03');
-        a.setHours(23);
+      let dt = new Date();
+      dt.setHours(5, 0, 0, 0);
+      let dates = [new Date(dt)];
+      dt.setHours(6, 0, 0, 0);
+      
+      for (let i = 0; i < 6; i++) {
+        dates.push(new Date(dt));
+        dt.setDate(dt.getDate() + 1);
+        dt.setHours(7 + i, 0, 0, 0);
+      }
 
-        let times = [(new Date('2018-12-04')), (new Date('2018-12-04')), (new Date('2018-12-03')), a];
-        myComponent.schedulingData = [
-          { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, availableTimes: times.slice(0, 1) },
-          { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, availableTimes: times },
-          { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, availableTimes: times.slice(0, 2) },
-        ];
+      myComponent.schedulingData = [
+        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, availableTimes: dates.slice(0, 2) },
+        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, availableTimes: dates },
+        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, availableTimes: dates.slice(0, 3) },
+      ];
 
-        myComponent.addEventListener("onScheduleUpdated", function (event) {
-          const res = event.detail;
-          console.log(res);
-        })
-    }, 5000);
+      myComponent.addEventListener("onScheduleUpdated", function (event) {
+        const res = event.detail;
+        console.log(res);
+      })
+    };
+
   </script>
 </head>
 

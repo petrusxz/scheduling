@@ -1,3 +1,6 @@
+/**
+ * @description Resizes and decreases image quality.
+ */
 export function imageHandler(image: ArrayBuffer): Promise<string> {
     if (!image) { return Promise.resolve('assets/user.svg'); }
 

@@ -1,5 +1,8 @@
 import { Day } from '../models/day.model';
 
+/**
+ * @description Returns an array with the days of the week from the dateParam
+ */
 export function getDaysOfTheWeek(dateParam: Date): Day[] {
     const days = [];
 
@@ -22,4 +25,21 @@ export function getDaysOfTheWeek(dateParam: Date): Day[] {
     }
 
     return days;
+}
+
+/**
+ * @description If the date doesn't exist in the array, it will insert it. Otherwise, it will remove it.  
+ */
+export function manageSelectedDate(selectedDate: Date, datesParam: Date[]): Date[] {
+    let dates = [...datesParam];
+
+    const dateIdx = dates.findIndex(el => el.getTime() === selectedDate.getTime());
+
+    if (dateIdx !== -1) {
+        dates = dates.filter(e => e.getTime() !== selectedDate.getTime())
+    } else {
+        dates.push(selectedDate);
+    }
+
+    return dates;
 }

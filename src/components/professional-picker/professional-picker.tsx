@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, State } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { imageHandler } from '../../utils/image-handler';
 import { Professional } from '../../models/professional.model';
 
@@ -10,17 +10,25 @@ import { Professional } from '../../models/professional.model';
 export class ProfessionalPicker {
 
     @Prop({ mutable: true }) professionals: Professional[] = [];
+    @Prop({ mutable: true }) selectedProfessionalId: string = null;
 
-    @State() selectedProfessionalId: string = null;
     @State() professionalsRefined: Array<{ professional: Professional, img: string }> = [];
 
     @Event() onProfessionalUpdated: EventEmitter;
 
-    componentWillLoad(): void {
-        if (!this.professionals.length) { return; }
-    
-        this.selectedProfessionalId = this.professionals[0].id;
-        this.handlingProfessionalsImg();
+    @Watch('professionals')
+    professionalsOnChange() {
+        this.initialize();
+    }
+
+    componentDidLoad(): void {
+        this.initialize();
+    }
+
+    private initialize(): void {
+        if (this.professionals.length) {
+            this.handlingProfessionalsImg();
+        }
     }
 
     private handlingProfessionalsImg(): void {
@@ -40,9 +48,8 @@ export class ProfessionalPicker {
     }
 
     private isSelectedProfessional(professionalId: string): boolean {
-        if (!this.selectedProfessionalId) { return false; }
-
-        return professionalId === this.selectedProfessionalId;
+        const activeProfessionalId = this.selectedProfessionalId || this.professionals[0].id;
+        return professionalId === activeProfessionalId;
     }
 
     render(): JSX.Element {

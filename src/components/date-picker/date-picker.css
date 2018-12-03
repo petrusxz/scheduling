@@ -6,6 +6,7 @@
 .week-days-header span {
   float: right;
   color: #586268;
+  font-weight: bold;
 }
 
 .week-days-header span,

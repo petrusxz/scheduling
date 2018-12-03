@@ -38,10 +38,12 @@ export namespace Components {
 
   interface ProfessionalPicker {
     'professionals': Professional[];
+    'selectedProfessionalId': string;
   }
   interface ProfessionalPickerAttributes extends StencilHTMLAttributes {
     'onOnProfessionalUpdated'?: (event: CustomEvent) => void;
     'professionals'?: Professional[];
+    'selectedProfessionalId'?: string;
   }
 
   interface SchedulesOverview {
@@ -55,11 +57,12 @@ export namespace Components {
 
   interface TimePicker {
     'availableTimes': Date[];
-    'resetSchedules': () => void;
+    'selectedTimes': Date[];
   }
   interface TimePickerAttributes extends StencilHTMLAttributes {
     'availableTimes'?: Date[];
     'onOnTimeUpdated'?: (event: CustomEvent) => void;
+    'selectedTimes'?: Date[];
   }
 }
 

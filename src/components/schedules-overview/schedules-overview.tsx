@@ -16,7 +16,7 @@ export class SchedulesOverview {
     @State() hiddenOverview: boolean = true;
     @State() professionalImg: string = '';
 
-    componentDidLoad() {
+    componentDidLoad(): void {
         imageHandler(this.professional.picture)
             .then((resizedImg) => this.professionalImg = resizedImg);
     }
@@ -52,23 +52,17 @@ export class SchedulesOverview {
     }
 
     private renderListInfo(): JSX.Element {
-        let message = null;
-
         if (this.scheduling.schedules.length > 1 && this.hiddenOverview) {
-            message = (
-                <div>
-                    Schedules <span class="schedules-count">{this.scheduling.schedules.length}</span>
-                </div>
+            return (
+                <label>
+                    <div>
+                        Schedules <span class="schedules-count">{this.scheduling.schedules.length}</span>
+                    </div>
+                </label>
             );
         } else if (!this.hiddenOverview) {
-            message = 'Hide';
+            return <label>Hide</label>;
         }
-
-        return (
-            <label>
-                {message}
-            </label>
-        );
     }
 
     private renderCustomDate(schedules = this.scheduling.schedules): JSX.Element {
@@ -84,7 +78,7 @@ export class SchedulesOverview {
         );
     }
 
-    getScheduleList(): JSX.Element {
+    private getScheduleList(): JSX.Element {
         const { schedules } = this.scheduling;
         const timestamps = schedules.map(e => e.getTime());
 
@@ -124,12 +118,12 @@ export class SchedulesOverview {
                     </figure>
 
                     <div class="last-schedule">
-                        <div style={!this.hiddenOverview && { paddingTop: '17px' }}>{this.professional.name}</div>
+                        <div style={!this.hiddenOverview && { paddingTop: '17px' }}>
+                            {this.professional.name}
+                        </div>
 
                         {this.renderListInfo()}
-
-                        {this.hiddenOverview &&
-                            this.renderCustomDate()}
+                        {this.hiddenOverview && this.renderCustomDate()}
                     </div>
 
                 </header>

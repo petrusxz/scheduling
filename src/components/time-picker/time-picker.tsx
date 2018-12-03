@@ -1,4 +1,5 @@
-import { Component, Prop, Event, EventEmitter, State, Method } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter } from '@stencil/core';
+import { manageSelectedDate } from '../../utils/calendar-handler';
 
 @Component({
     tag: 'time-picker',
@@ -8,27 +9,12 @@ import { Component, Prop, Event, EventEmitter, State, Method } from '@stencil/co
 export class TimePicker {
 
     @Prop({ mutable: true }) availableTimes: Date[] = [];
-
-    @State() selectedTimes: Date[] = [];
+    @Prop({ mutable: true }) selectedTimes: Date[] = [];
 
     @Event() onTimeUpdated: EventEmitter;
 
-    @Method()
-    resetSchedules(): void {
-        this.selectedTimes = [];
-    }
-
     private setScheduleTime(date: Date): void {
-        let timeArr = [...this.selectedTimes];
-        const timeIndex = timeArr.findIndex(el => el.getTime() === date.getTime());
-
-        if (timeIndex !== -1) {
-            timeArr = timeArr.filter(e => e.getTime() !== date.getTime())
-        } else {
-            timeArr.push(date);
-        }
-        
-        this.selectedTimes = timeArr;
+        this.selectedTimes = manageSelectedDate(date, this.selectedTimes);
         this.onTimeUpdated.emit(date);
     }
 
@@ -46,8 +32,7 @@ export class TimePicker {
                             {date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
                         </span>
                     )
-                    :
-                    <span class="no-time">No time available</span>
+                    : <span class="no-time">No time available</span>
                 }
             </div>
         );

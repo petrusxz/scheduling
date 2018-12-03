@@ -2,11 +2,12 @@ import { Component, Prop, Listen, State, Event, EventEmitter, Element, Watch } f
 import { SchedulingData } from '../../models/scheduling-data.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
 import { Professional } from '../../models/professional.model';
+import { manageSelectedDate } from '../../utils/calendar-handler';
 
 @Component({
   tag: 'app-scheduling',
   styleUrl: 'app-scheduling.css',
-  shadow: true
+  shadow: false
 })
 export class AppScheduling {
 
@@ -31,11 +32,12 @@ export class AppScheduling {
     this.initialize();
   }
 
-  initialize(): void {
+  private initialize(): void {
     this.professionals = this.schedulingData.map((el) => el.professional);
 
     if (this.professionals.length) {
       this.scheduling.professionalId = this.professionals[0].id;
+      this.selectedProfessional = this.professionals[0];
       this.availableDates = this.schedulingData[0].availableTimes;
 
       this.handleOnDateUpdated();
@@ -72,22 +74,14 @@ export class AppScheduling {
   handleOnTimeUpdated(event: CustomEvent): void {
     const selectedDate = event.detail as Date;
     const schedulingHelper = Object.assign({}, this.scheduling);
-    const scheduleIndex = schedulingHelper.schedules.findIndex(el => el.getTime() === selectedDate.getTime());
 
-    if (scheduleIndex !== -1) {
-      schedulingHelper.schedules = schedulingHelper.schedules.filter(e => e.getTime() !== selectedDate.getTime())
-    } else {
-      schedulingHelper.schedules.push(selectedDate);
-    }
-
+    schedulingHelper.schedules = manageSelectedDate(selectedDate, schedulingHelper.schedules);
     this.scheduling = schedulingHelper;
   }
 
   private resetSelectedValues(): void {
     const datePickerEl = this.appSchedulingEl.querySelector('date-picker');
-    const timePickerEl = this.appSchedulingEl.querySelector('time-picker');
     datePickerEl.resetDates();
-    timePickerEl.resetSchedules();
     this.scheduling.schedules = [];
   }
 
@@ -98,9 +92,9 @@ export class AppScheduling {
           <schedules-overview professional={this.selectedProfessional} scheduling={this.scheduling}></schedules-overview>
         }
 
-        <professional-picker professionals={this.professionals}></professional-picker>
+        <professional-picker professionals={this.professionals} selectedProfessionalId={this.scheduling.professionalId}></professional-picker>
         <date-picker></date-picker>
-        <time-picker availableTimes={this.availableTimes}></time-picker>
+        <time-picker availableTimes={this.availableTimes} selectedTimes={this.scheduling.schedules}></time-picker>
 
         {this.scheduling.schedules.length > 0 &&
           <button 
