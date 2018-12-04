@@ -11,7 +11,7 @@ import { manageSelectedDate } from '../../utils/calendar-handler';
 @Component({
   tag: 'app-scheduling',
   styleUrl: 'app-scheduling.css',
-  shadow: false
+  shadow: true
 })
 export class AppScheduling {
 
@@ -21,6 +21,7 @@ export class AppScheduling {
 
   @State() professionals: Professional[] = [];
   @State() selectedProfessional: Professional = null;
+  @State() selectedDate: Date = new Date();
   @State() availableDates: Date[] = [];
   @State() availableTimes: Date[] = [];
   @State() scheduling: SchedulingResponse = new SchedulingResponse();
@@ -44,13 +45,14 @@ export class AppScheduling {
    */
   private initialize(): void {
     this.professionals = this.schedulingData.map((el) => el.professional);
+    this.selectedDate.setHours(0, 0, 0, 0);
 
     if (this.professionals.length) {
       this.scheduling.professionalId = this.professionals[0].id;
       this.selectedProfessional = this.professionals[0];
       this.availableDates = this.schedulingData[0].availableTimes;
 
-      this.handleOnDateUpdated();
+      this.updateAvailableTime();
     }
   }
 
@@ -62,10 +64,10 @@ export class AppScheduling {
   handleOnProfessionalUpdated(event: CustomEvent): void {
     this.selectedProfessional = event.detail as Professional;
     this.scheduling.professionalId = this.selectedProfessional.id;
+    this.scheduling.schedules = [];
 
     this.availableDates = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id).availableTimes;
-    this.handleOnDateUpdated();
-    this.resetSelectedValues();
+    this.updateAvailableTime();
   }
 
   /**
@@ -73,19 +75,9 @@ export class AppScheduling {
    * then handling values to filter the available times for the selected day.
    */
   @Listen('onDateUpdated')
-  handleOnDateUpdated(event: CustomEvent = null): void {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const selectedDate: Date = event ? event.detail : today;
-    const startDate = new Date(selectedDate);
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 1);
-
-    this.availableTimes = this.availableDates.filter((schedule) =>
-      (schedule.getTime() >= startDate.getTime())
-      && (schedule.getTime() < endDate.getTime())
-    );
+  handleOnDateUpdated(event: CustomEvent): void {
+    this.selectedDate = event.detail as Date;
+    this.updateAvailableTime();
   }
 
   /**
@@ -101,10 +93,15 @@ export class AppScheduling {
     this.scheduling = schedulingHelper;
   }
 
-  private resetSelectedValues(): void {
-    const datePickerEl = this.appSchedulingEl.querySelector('date-picker');
-    datePickerEl.resetDates();
-    this.scheduling.schedules = [];
+  private updateAvailableTime(): void {
+    const startDate = new Date(this.selectedDate);
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 1);
+
+    this.availableTimes = this.availableDates.filter((schedule) =>
+      (schedule.getTime() >= startDate.getTime())
+      && (schedule.getTime() < endDate.getTime())
+    );
   }
 
   render(): JSX.Element {
@@ -119,7 +116,7 @@ export class AppScheduling {
         <time-picker availableTimes={this.availableTimes} selectedTimes={this.scheduling.schedules}></time-picker>
 
         {this.scheduling.schedules.length > 0 &&
-          <button 
+          <button
             class="confirm"
             onClick={() => this.onScheduleUpdated.emit(this.scheduling)}>
             Confirm
