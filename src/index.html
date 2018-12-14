@@ -15,6 +15,12 @@
       let dates = [new Date(dt)];
       dt.setHours(6, 0, 0, 0);
       
+      const dt2 = new Date();
+      dt2.setHours(5, 0, 0, 0);
+      const stWT = new Date(dt2);
+      dt2.setHours(18, 0, 0, 0);
+      const edWT = new Date(dt2);
+
       for (let i = 0; i < 6; i++) {
         dates.push(new Date(dt));
         dt.setDate(dt.getDate() + 1);
@@ -22,9 +28,9 @@
       }
 
       myComponent.schedulingData = [
-        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, availableTimes: dates.slice(0, 2) },
-        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, availableTimes: dates },
-        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, availableTimes: dates.slice(0, 3) },
+        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, busySchedules: dates.slice(0, 2), startWorkingTime: stWT, endWorkingTime: edWT },
+        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, busySchedules: dates, startWorkingTime: stWT, endWorkingTime: edWT },
+        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, busySchedules: dates.slice(0, 3), startWorkingTime: stWT, endWorkingTime: edWT },
       ];
 
       myComponent.addEventListener("onScheduleUpdated", function (event) {

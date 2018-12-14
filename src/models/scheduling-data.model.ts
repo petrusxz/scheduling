@@ -2,5 +2,8 @@ import { Professional } from './professional.model';
 
 export interface SchedulingData {
     professional: Professional;
-    availableTimes: Date[];
+    busySchedules: Date[];
+    startWorkingTime: Date;
+    endWorkingTime: Date;
+    availableDays: number[];
 }

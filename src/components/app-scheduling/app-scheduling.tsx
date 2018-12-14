@@ -2,7 +2,7 @@ import { Component, Prop, Listen, State, Event, EventEmitter, Element, Watch } f
 import { SchedulingData } from '../../models/scheduling-data.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
 import { Professional } from '../../models/professional.model';
-import { manageSelectedDate } from '../../utils/calendar-handler';
+import { manageSelectedDate, getAvailableSchedules } from '../../utils/calendar-handler';
 
 /**
  * @description App entry point called at index.html and used as a 
@@ -22,7 +22,9 @@ export class AppScheduling {
   @State() professionals: Professional[] = [];
   @State() selectedProfessional: Professional = null;
   @State() selectedDate: Date = new Date();
-  @State() availableDates: Date[] = [];
+  @State() busySchedules: Date[] = [];
+  @State() startWorkingTime: Date;
+  @State() endWorkingTime: Date;
   @State() availableTimes: Date[] = [];
   @State() scheduling: SchedulingResponse = new SchedulingResponse();
 
@@ -50,7 +52,9 @@ export class AppScheduling {
     if (this.professionals.length) {
       this.scheduling.professionalId = this.professionals[0].id;
       this.selectedProfessional = this.professionals[0];
-      this.availableDates = this.schedulingData[0].availableTimes;
+      this.busySchedules = this.schedulingData[0].busySchedules;
+      this.startWorkingTime = this.schedulingData[0].startWorkingTime;
+      this.endWorkingTime = this.schedulingData[0].endWorkingTime;
 
       this.updateAvailableTime();
     }
@@ -66,7 +70,12 @@ export class AppScheduling {
     this.scheduling.professionalId = this.selectedProfessional.id;
     this.scheduling.schedules = [];
 
-    this.availableDates = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id).availableTimes;
+    const scheduling = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id);
+
+    this.busySchedules = scheduling.busySchedules;
+    this.startWorkingTime = scheduling.startWorkingTime;
+    this.endWorkingTime = scheduling.endWorkingTime;
+    
     this.updateAvailableTime();
   }
 
@@ -98,10 +107,12 @@ export class AppScheduling {
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 1);
 
-    this.availableTimes = this.availableDates.filter((schedule) =>
+    const busySchedulesFromSelectedDate = this.busySchedules.filter((schedule) =>
       (schedule.getTime() >= startDate.getTime())
       && (schedule.getTime() < endDate.getTime())
     );
+
+    this.availableTimes = getAvailableSchedules(busySchedulesFromSelectedDate, this.startWorkingTime, this.endWorkingTime);
   }
 
   render(): JSX.Element {

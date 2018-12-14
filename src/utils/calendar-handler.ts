@@ -43,3 +43,22 @@ export function manageSelectedDate(selectedDate: Date, datesParam: Date[]): Date
 
     return dates;
 }
+
+/**
+ * @description Generates available times from the busy schedules array considering the working time range 
+ */
+export function getAvailableSchedules(busySchedules: Date[], startWorkingTime: Date, endWorkingtime: Date): Date[] {
+    const startTime = new Date(startWorkingTime);
+    const endTime = new Date(endWorkingtime);
+    const availableTimes = [];
+
+    while (startTime.getTime() !== endTime.getTime()) {
+        if (busySchedules.findIndex(e => e.getTime() === startTime.getTime()) === -1) {
+            availableTimes.push(startTime);
+        }
+
+        startTime.setHours(startTime.getHours() + 1);
+    }
+
+    return availableTimes;
+}
