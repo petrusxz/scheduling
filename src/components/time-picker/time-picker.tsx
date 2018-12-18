@@ -26,14 +26,14 @@ export class TimePicker {
             <div class="picker-container">
                 {this.availableTimes.length
                     ? this.availableTimes.map((date) =>
-                        <span
+                        <div
                             class={{
                                 'schedule-time': true,
                                 'selected': !!this.selectedTimes.find(el => el.getTime() === date.getTime())
                             }}
                             onClick={() => this.setScheduleTime(date)}>
                             {date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
-                        </span>
+                        </div>
                     )
                     : <span class="no-time">No time available</span>
                 }

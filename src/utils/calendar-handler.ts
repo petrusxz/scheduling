@@ -52,11 +52,15 @@ export function getAvailableSchedules(busySchedules: Date[], startWorkingTime: D
     const endTime = new Date(endWorkingtime);
     const availableTimes = [];
 
-    while (startTime.getTime() !== endTime.getTime()) {
-        if (busySchedules.findIndex(e => e.getTime() === startTime.getTime()) === -1) {
-            availableTimes.push(startTime);
-        }
+    const timeRange = endTime.getHours() - startTime.getHours();
 
+    for (let i = 0; i < timeRange; i++) {
+        const timeIdx = busySchedules.findIndex(e => e.getTime() === startTime.getTime());
+        
+        if (timeIdx === -1) {
+            availableTimes.push(new Date(startTime));
+        }
+    
         startTime.setHours(startTime.getHours() + 1);
     }
 

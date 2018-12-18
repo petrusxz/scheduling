@@ -29,9 +29,7 @@ export namespace Components {
     'schedulingData'?: SchedulingData[];
   }
 
-  interface DatePicker {
-    'resetDates': () => void;
-  }
+  interface DatePicker {}
   interface DatePickerAttributes extends StencilHTMLAttributes {
     'onOnDateUpdated'?: (event: CustomEvent) => void;
   }

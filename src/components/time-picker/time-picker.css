@@ -5,9 +5,10 @@
 }
 
 .schedule-time {
-  color: #586268;
+  display: inline-block;
   padding: 5px 8px;
-  margin-right: 4px;
+  margin: 3px;
+  color: #586268;
   border-radius: 4px;
 }
 

@@ -1,4 +1,4 @@
-import { Component, Prop, Listen, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
+import { Component, Prop, Listen, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { SchedulingData } from '../../models/scheduling-data.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
 import { Professional } from '../../models/professional.model';
@@ -14,8 +14,6 @@ import { manageSelectedDate, getAvailableSchedules } from '../../utils/calendar-
   shadow: true
 })
 export class AppScheduling {
-
-  @Element() appSchedulingEl: HTMLElement;
 
   @Prop({ mutable: true }) schedulingData: SchedulingData[] = [];
 
@@ -53,9 +51,8 @@ export class AppScheduling {
       this.scheduling.professionalId = this.professionals[0].id;
       this.selectedProfessional = this.professionals[0];
       this.busySchedules = this.schedulingData[0].busySchedules;
-      this.startWorkingTime = this.schedulingData[0].startWorkingTime;
-      this.endWorkingTime = this.schedulingData[0].endWorkingTime;
 
+      this.setWorkingTime(this.schedulingData[0].startWorkingTime, this.schedulingData[0].endWorkingTime);
       this.updateAvailableTime();
     }
   }
@@ -73,9 +70,8 @@ export class AppScheduling {
     const scheduling = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id);
 
     this.busySchedules = scheduling.busySchedules;
-    this.startWorkingTime = scheduling.startWorkingTime;
-    this.endWorkingTime = scheduling.endWorkingTime;
-    
+    this.setWorkingTime(scheduling.startWorkingTime, scheduling.endWorkingTime);
+
     this.updateAvailableTime();
   }
 
@@ -113,6 +109,16 @@ export class AppScheduling {
     );
 
     this.availableTimes = getAvailableSchedules(busySchedulesFromSelectedDate, this.startWorkingTime, this.endWorkingTime);
+  }
+
+
+  private setWorkingTime(startTime: number, endTime: number): void {
+    const stWorkingTime = new Date(this.selectedDate);
+    stWorkingTime.setHours(startTime);
+    this.startWorkingTime = stWorkingTime;
+    const edWorkingTime = new Date(stWorkingTime);
+    edWorkingTime.setHours(endTime);
+    this.endWorkingTime = edWorkingTime;
   }
 
   render(): JSX.Element {

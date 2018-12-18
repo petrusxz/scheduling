@@ -1,4 +1,4 @@
-import { Component, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, State, Event, EventEmitter } from '@stencil/core';
 import { Day } from '../../models/day.model';
 import { getDaysOfTheWeek } from '../../utils/calendar-handler';
 
@@ -18,12 +18,7 @@ export class DatePicker {
 
     @Event() onDateUpdated: EventEmitter;
 
-    @Method()
-    resetDates(): void {
-        this.setWeekDays();
-    }
-
-    componentWillLoad(): void {
+    componentWillLoad(): void {        
         this.setWeekDays();
     }
 
@@ -33,9 +28,10 @@ export class DatePicker {
     private setWeekDays(dateParam: Date = new Date()): void {
         this.days = getDaysOfTheWeek(dateParam);
         const lastDay = this.days[this.days.length - 1].weekDay;
-
+        
         this.activeMonth = `${lastDay.toLocaleDateString('en-US', { month: 'long' })} ${lastDay.getFullYear()}`;
         this.selectedDate = this.days.find(e => !e.isReadonly).weekDay;
+
         this.onDateUpdated.emit(this.selectedDate);
     }
 
