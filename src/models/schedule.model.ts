@@ -1,4 +1,4 @@
-export interface Schedule {
-    date: Date;
-    isSelected: boolean;
+export class Schedule {
+    date: Date = null;
+    isSelected: boolean = null;
 }

@@ -1,6 +1,6 @@
-export interface Day {
-    weekDay: Date;
-    shortName: string;
-    dayNumber: number;
-    isReadonly: boolean;
+export class Day {
+    weekDay: Date = null;
+    shortName: string = null;
+    dayNumber: number = null;
+    isReadonly: boolean = null;
 }

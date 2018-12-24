@@ -1,6 +1,7 @@
 {
-  "name": "app-scheduling",
-  "version": "0.0.1",
+  "name": "@petrusxz/app-scheduling",
+  "version": "0.0.6",
+  "author": "Petrus Cyrino",
   "description": "Date & Time Scheduling Component",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
@@ -15,6 +16,10 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petrusxz/scheduling.git"
   },
   "dependencies": {},
   "devDependencies": {

@@ -51,8 +51,7 @@ export class AppScheduling {
       this.scheduling.professionalId = this.professionals[0].id;
       this.selectedProfessional = this.professionals[0];
       this.busySchedules = this.schedulingData[0].busySchedules;
-
-      this.setWorkingTime(this.schedulingData[0].startWorkingTime, this.schedulingData[0].endWorkingTime);
+      
       this.updateAvailableTime();
     }
   }
@@ -66,11 +65,6 @@ export class AppScheduling {
     this.selectedProfessional = event.detail as Professional;
     this.scheduling.professionalId = this.selectedProfessional.id;
     this.scheduling.schedules = [];
-
-    const scheduling = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id);
-
-    this.busySchedules = scheduling.busySchedules;
-    this.setWorkingTime(scheduling.startWorkingTime, scheduling.endWorkingTime);
 
     this.updateAvailableTime();
   }
@@ -93,12 +87,14 @@ export class AppScheduling {
   handleOnTimeUpdated(event: CustomEvent): void {
     const selectedDate = event.detail as Date;
     const schedulingHelper = Object.assign({}, this.scheduling);
-
+    
     schedulingHelper.schedules = manageSelectedDate(selectedDate, schedulingHelper.schedules);
     this.scheduling = schedulingHelper;
   }
 
   private updateAvailableTime(): void {
+    if (!this.selectedProfessional) { return; }
+
     const startDate = new Date(this.selectedDate);
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 1);
@@ -108,9 +104,12 @@ export class AppScheduling {
       && (schedule.getTime() < endDate.getTime())
     );
 
+    const scheduling = this.schedulingData.find((data) => data.professional.id === this.selectedProfessional.id);
+    this.setWorkingTime(scheduling.startWorkingTime, scheduling.endWorkingTime);
+    this.busySchedules = scheduling.busySchedules;
+
     this.availableTimes = getAvailableSchedules(busySchedulesFromSelectedDate, this.startWorkingTime, this.endWorkingTime);
   }
-
 
   private setWorkingTime(startTime: number, endTime: number): void {
     const stWorkingTime = new Date(this.selectedDate);

@@ -1,5 +1,5 @@
-export interface Professional {
-    id: string;
-    picture: ArrayBuffer;
-    name: string;
+export class Professional {
+    id: string = null;
+    picture: ArrayBuffer = null;
+    name: string = null;
 }

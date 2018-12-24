@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Date & Time Scheduling Component</title>
   <script src="/build/appscheduling.js"></script>
+  <!-- <script src="https://unpkg.com/@petrusxz/app-scheduling@0.0.4/dist/appscheduling.js"></script> -->
 
   <script>
     window.onload = function () {
@@ -22,9 +23,9 @@
       }
 
       myComponent.schedulingData = [
-        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, busySchedules: dates.slice(0, 2), startWorkingTime: 7, endWorkingTime: 18 },
-        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, busySchedules: dates, startWorkingTime: 7, endWorkingTime: 18 },
-        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, busySchedules: dates.slice(0, 3), startWorkingTime: 7, endWorkingTime: 18 },
+        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, busySchedules: [], startWorkingTime: 7, endWorkingTime: 18 },
+        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, busySchedules: [], startWorkingTime: 6, endWorkingTime: 17 },
+        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, busySchedules: [], startWorkingTime: 4, endWorkingTime: 16 },
       ];
 
       myComponent.addEventListener("onScheduleUpdated", function (event) {
