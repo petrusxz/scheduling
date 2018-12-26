@@ -22,26 +22,16 @@ import {
 export namespace Components {
 
   interface AppScheduling {
-    'schedulingData': SchedulingData[];
+    'schedulingData': SchedulingData;
   }
   interface AppSchedulingAttributes extends StencilHTMLAttributes {
     'onOnScheduleUpdated'?: (event: CustomEvent) => void;
-    'schedulingData'?: SchedulingData[];
+    'schedulingData'?: SchedulingData;
   }
 
   interface DatePicker {}
   interface DatePickerAttributes extends StencilHTMLAttributes {
     'onOnDateUpdated'?: (event: CustomEvent) => void;
-  }
-
-  interface ProfessionalPicker {
-    'professionals': Professional[];
-    'selectedProfessionalId': string;
-  }
-  interface ProfessionalPickerAttributes extends StencilHTMLAttributes {
-    'onOnProfessionalUpdated'?: (event: CustomEvent) => void;
-    'professionals'?: Professional[];
-    'selectedProfessionalId'?: string;
   }
 
   interface SchedulesOverview {
@@ -68,7 +58,6 @@ declare global {
   interface StencilElementInterfaces {
     'AppScheduling': Components.AppScheduling;
     'DatePicker': Components.DatePicker;
-    'ProfessionalPicker': Components.ProfessionalPicker;
     'SchedulesOverview': Components.SchedulesOverview;
     'TimePicker': Components.TimePicker;
   }
@@ -76,7 +65,6 @@ declare global {
   interface StencilIntrinsicElements {
     'app-scheduling': Components.AppSchedulingAttributes;
     'date-picker': Components.DatePickerAttributes;
-    'professional-picker': Components.ProfessionalPickerAttributes;
     'schedules-overview': Components.SchedulesOverviewAttributes;
     'time-picker': Components.TimePickerAttributes;
   }
@@ -94,12 +82,6 @@ declare global {
     new (): HTMLDatePickerElement;
   };
 
-  interface HTMLProfessionalPickerElement extends Components.ProfessionalPicker, HTMLStencilElement {}
-  var HTMLProfessionalPickerElement: {
-    prototype: HTMLProfessionalPickerElement;
-    new (): HTMLProfessionalPickerElement;
-  };
-
   interface HTMLSchedulesOverviewElement extends Components.SchedulesOverview, HTMLStencilElement {}
   var HTMLSchedulesOverviewElement: {
     prototype: HTMLSchedulesOverviewElement;
@@ -115,7 +97,6 @@ declare global {
   interface HTMLElementTagNameMap {
     'app-scheduling': HTMLAppSchedulingElement
     'date-picker': HTMLDatePickerElement
-    'professional-picker': HTMLProfessionalPickerElement
     'schedules-overview': HTMLSchedulesOverviewElement
     'time-picker': HTMLTimePickerElement
   }
@@ -123,7 +104,6 @@ declare global {
   interface ElementTagNameMap {
     'app-scheduling': HTMLAppSchedulingElement;
     'date-picker': HTMLDatePickerElement;
-    'professional-picker': HTMLProfessionalPickerElement;
     'schedules-overview': HTMLSchedulesOverviewElement;
     'time-picker': HTMLTimePickerElement;
   }

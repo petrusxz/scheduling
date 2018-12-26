@@ -22,11 +22,12 @@
         dt.setHours(7 + i, 0, 0, 0);
       }
 
-      myComponent.schedulingData = [
-        { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, busySchedules: [], startWorkingTime: 7, endWorkingTime: 18 },
-        { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, busySchedules: [], startWorkingTime: 6, endWorkingTime: 17 },
-        { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, busySchedules: [], startWorkingTime: 4, endWorkingTime: 16 },
-      ];
+      myComponent.schedulingData = { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, busySchedules: [], startWorkingTime: 4, endWorkingTime: 16 };
+      // myComponent.schedulingData = [
+      //   { professional: {id: 'xCre547', name: 'Paolo', picture: ''}, busySchedules: [], startWorkingTime: 7, endWorkingTime: 18 },
+      //   { professional: {id: 'e547UJS', name: 'St. John', picture: ''}, busySchedules: [], startWorkingTime: 6, endWorkingTime: 17 },
+      //   { professional: {id: 'so$rfs#', name: 'Amazing MF', picture: ''}, busySchedules: [], startWorkingTime: 4, endWorkingTime: 16 },
+      // ];
 
       myComponent.addEventListener("onScheduleUpdated", function (event) {
         const res = event.detail;

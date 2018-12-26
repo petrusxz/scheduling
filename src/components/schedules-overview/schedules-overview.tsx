@@ -125,12 +125,12 @@ export class SchedulesOverview {
                     </figure>
 
                     <div class="last-schedule">
-                        <div style={!this.hiddenOverview && { paddingTop: '17px' }}>
+                        <div style={(!this.hiddenOverview || !this.scheduling.schedules.length) && { paddingTop: '17px' }}>
                             {this.professional.name}
                         </div>
 
-                        {this.renderListInfo()}
-                        {this.hiddenOverview && this.renderCustomDate()}
+                        {this.scheduling.schedules.length > 0 && this.renderListInfo()}
+                        {(this.hiddenOverview && this.scheduling.schedules.length > 0) && this.renderCustomDate()}
                     </div>
 
                 </header>
