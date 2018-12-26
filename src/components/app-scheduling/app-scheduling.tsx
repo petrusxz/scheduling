@@ -15,6 +15,7 @@ import { manageSelectedDate, getAvailableSchedules } from '../../utils/calendar-
 export class AppScheduling {
 
   @Prop({ mutable: true }) schedulingData: SchedulingData = null;
+  @Prop({ mutable: true }) selectedSchedules: Date[] = [];
 
   @State() selectedDate: Date = new Date();
   @State() startWorkingTime: Date;
@@ -42,6 +43,10 @@ export class AppScheduling {
   private initialize(): void {
     this.selectedDate.setHours(0, 0, 0, 0);
     this.scheduling.professionalId = this.schedulingData.professional.id;
+    
+    const schedulingHelper = Object.assign({}, this.scheduling);
+    schedulingHelper.schedules = this.selectedSchedules;
+    this.scheduling = schedulingHelper;
 
     this.updateAvailableTime();
   }

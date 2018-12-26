@@ -23,10 +23,12 @@ export namespace Components {
 
   interface AppScheduling {
     'schedulingData': SchedulingData;
+    'selectedSchedules': Date[];
   }
   interface AppSchedulingAttributes extends StencilHTMLAttributes {
     'onOnScheduleUpdated'?: (event: CustomEvent) => void;
     'schedulingData'?: SchedulingData;
+    'selectedSchedules'?: Date[];
   }
 
   interface DatePicker {}
