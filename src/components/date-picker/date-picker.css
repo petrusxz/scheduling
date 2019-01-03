@@ -1,6 +1,7 @@
 .week-days-header {
   display: block;
   padding-bottom: 12px;
+  text-transform: capitalize;
 }
 
 .week-days-header span {
@@ -43,6 +44,7 @@
 }
 
 .week-days .name {
+  text-transform: capitalize;
   color: #a0a2a4;
   padding-bottom: 8px;
 }

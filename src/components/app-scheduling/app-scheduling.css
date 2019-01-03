@@ -55,7 +55,7 @@ button[disabled] {
 .picker-container,
 .overview-container {
   display: block;
-  background-color: #f7f7f7;
+  background-color: #fff;
   padding: 12px;
   margin: 0 auto 16px auto;
   border: 1px solid #e4e6e5;
@@ -86,6 +86,6 @@ button[disabled] {
 }
 
 .selected {
-  background-color: #a369f9 !important;
+  background-color: #6d94b2 !important;
   color: #f7f7f7 !important;
 }

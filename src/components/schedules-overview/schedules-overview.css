@@ -1,24 +1,35 @@
 .overview-container header {
-  height: 48px;
-  position: relative;
-  cursor: pointer;
+    height: 48px;
+    position: relative;
+    cursor: pointer;
 }
 
 .last-schedule {
-  display: inline-block;
-  height: 100%;
-  width: 82%;
-  position: absolute;
-  right: 0;
-  color: #586268;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 82%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #586268;
 }
 
-.last-schedule label {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: #a0a2a4;
-  font-size: .9em;
+.last-schedule .icon-ctrl {
+    margin: 0 6px 0 auto;
+    font-size: 1.2em;
+    transform: rotate(-90deg);
+    font-weight: bold;
+}
+
+.last-schedule .icon-ctrl span {
+    width: 6px;
+    height: 6px;
+    background-color: #e9b257;
+    position: absolute;
+    top: 16px;
+    right: 4px;
+    border-radius: 50%;
 }
 
 .overview img {
@@ -27,46 +38,47 @@
 }
 
 figure.overview {
-  display: inline-block;
-  margin: 0;
+    display: inline-block;
+    margin: 0;
 }
 
 .schedules-count {
-  display: inline-block;
-  background-color: #586268;
-  color: white;
-  width: 16px;
-  text-align: center;
-  padding: 2px;
-  border-radius: 50%;
+    display: inline-block;
+    background-color: #586268;
+    color: white;
+    width: 16px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 50%;
 }
 
 .date-time-container {
-  position: relative;
-  width: 100%;
-  min-height: 35px;
+    position: relative;
+    width: 100%;
+    min-height: 35px;
 }
 
 .list {
-  margin-top: 10px;
-  padding-bottom: 6px;
+    margin-top: 10px;
+    padding-bottom: 6px;
 }
 
 .list:not(:last-child) {
-  border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
 }
 
 .date-view {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: .9em;
-  color: #a0a2a4;
-  width: 125px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: .9em;
+    color: #a0a2a4;
+    width: 125px;
+    text-transform: capitalize;
 }
 
 .time-view {
-  color: #586268;
-  text-align: right;
-  width: 100%;
+    color: #586268;
+    text-align: right;
+    width: 100%;
 }

@@ -22,25 +22,32 @@ import {
 export namespace Components {
 
   interface AppScheduling {
+    'language': string;
     'schedulingData': SchedulingData;
     'selectedSchedules': Date[];
   }
   interface AppSchedulingAttributes extends StencilHTMLAttributes {
+    'language'?: string;
     'onOnScheduleUpdated'?: (event: CustomEvent) => void;
     'schedulingData'?: SchedulingData;
     'selectedSchedules'?: Date[];
   }
 
-  interface DatePicker {}
+  interface DatePicker {
+    'language': string;
+  }
   interface DatePickerAttributes extends StencilHTMLAttributes {
+    'language'?: string;
     'onOnDateUpdated'?: (event: CustomEvent) => void;
   }
 
   interface SchedulesOverview {
+    'language': string;
     'professional': Professional;
     'scheduling': SchedulingResponse;
   }
   interface SchedulesOverviewAttributes extends StencilHTMLAttributes {
+    'language'?: string;
     'professional'?: Professional;
     'scheduling'?: SchedulingResponse;
   }

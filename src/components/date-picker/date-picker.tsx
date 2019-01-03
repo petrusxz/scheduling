@@ -1,6 +1,6 @@
-import { Component, State, Event, EventEmitter } from '@stencil/core';
+import { Component, State, Event, EventEmitter, Prop } from '@stencil/core';
 import { Day } from '../../models/day.model';
-import { getDaysOfTheWeek } from '../../utils/calendar-handler';
+import { getDaysOfTheWeek, getTranslatedToday } from '../../utils/calendar-handler';
 
 /**
  * @description Weekly calendar working as day picker to load equivalent available schedules.
@@ -12,13 +12,15 @@ import { getDaysOfTheWeek } from '../../utils/calendar-handler';
 })
 export class DatePicker {
 
+    @Prop() language: string = null;
+
     @State() days: Day[] = [];
     @State() activeMonth: string = null;
     @State() selectedDate: Date = null;
 
     @Event() onDateUpdated: EventEmitter;
 
-    componentWillLoad(): void {        
+    componentWillLoad(): void {
         this.setWeekDays();
     }
 
@@ -26,10 +28,10 @@ export class DatePicker {
      * @description Renders days of the week for the parameter date.
      */
     private setWeekDays(dateParam: Date = new Date()): void {
-        this.days = getDaysOfTheWeek(dateParam);
+        this.days = getDaysOfTheWeek(this.language, dateParam);
         const lastDay = this.days[this.days.length - 1].weekDay;
-        
-        this.activeMonth = `${lastDay.toLocaleDateString('en-US', { month: 'long' })} ${lastDay.getFullYear()}`;
+
+        this.activeMonth = `${lastDay.toLocaleDateString(this.language, { month: 'long' })} ${lastDay.getFullYear()}`;
         this.selectedDate = this.days.find(e => !e.isReadonly).weekDay;
 
         this.onDateUpdated.emit(this.selectedDate);
@@ -77,7 +79,7 @@ export class DatePicker {
                 <div class="week-days-header">
                     <label>{this.activeMonth}</label>
                     <span onClick={() => this.setWeekDays()}>
-                        Today
+                        {getTranslatedToday(this.language)}
                     </span>
                 </div>
 

@@ -14,6 +14,7 @@ import { manageSelectedDate, getAvailableSchedules } from '../../utils/calendar-
 })
 export class AppScheduling {
 
+  @Prop() language: string = 'en-US'; 
   @Prop({ mutable: true }) schedulingData: SchedulingData = null;
   @Prop({ mutable: true }) selectedSchedules: Date[] = [];
 
@@ -103,8 +104,8 @@ export class AppScheduling {
   render(): JSX.Element {
     return (
       <div class="app-container">
-        <schedules-overview professional={this.schedulingData.professional} scheduling={this.scheduling}></schedules-overview>
-        <date-picker></date-picker>
+        <schedules-overview language={this.language} professional={this.schedulingData.professional} scheduling={this.scheduling}></schedules-overview>
+        <date-picker language={this.language} ></date-picker>
         <time-picker availableTimes={this.availableTimes} selectedTimes={this.scheduling.schedules}></time-picker>
       </div>
     );

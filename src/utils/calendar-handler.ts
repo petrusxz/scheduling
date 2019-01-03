@@ -3,7 +3,7 @@ import { Day } from '../models/day.model';
 /**
  * @description Returns an array with the days of the week from the dateParam
  */
-export function getDaysOfTheWeek(dateParam: Date): Day[] {
+export function getDaysOfTheWeek(language: string, dateParam: Date): Day[] {
     const days = [];
 
     const today = new Date();
@@ -15,7 +15,7 @@ export function getDaysOfTheWeek(dateParam: Date): Day[] {
 
     for (let i = 0; i < 7; i++) {
         const weekDay = new Date(date);
-        const shortName = weekDay.toLocaleDateString('en-US', { weekday: 'short' });
+        const shortName = weekDay.toLocaleDateString(language, { weekday: 'short' });
         const dayNumber = weekDay.getDate();
         const isReadonly = weekDay < today;
 
@@ -65,4 +65,13 @@ export function getAvailableSchedules(busySchedules: Date[], startWorkingTime: D
     }
 
     return availableTimes;
+}
+
+export function getTranslatedToday(language: string): string {
+    const translations = [
+        { language: 'pt-BR', content: 'Hoje' },
+        { language: 'en-US', content: 'Today' }
+    ];
+
+    return translations.find(e => e.language.toLocaleLowerCase() === language.toLocaleLowerCase()).content;
 }

@@ -1,7 +1,7 @@
 import { Component, Prop, State } from '@stencil/core';
 import { Professional } from '../../models/professional.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
-import { imageHandler } from '../../utils/image-handler';
+// import { imageHandler } from '../../utils/image-handler';
 
 /**
  * @description Overview of the user full scheduling.
@@ -13,16 +13,18 @@ import { imageHandler } from '../../utils/image-handler';
 })
 export class SchedulesOverview {
 
+    @Prop() language: string = null;
+
     @Prop({ mutable: true }) professional: Professional = null;
     @Prop({ mutable: true }) scheduling: SchedulingResponse = null;
 
     @State() hiddenOverview: boolean = true;
-    @State() professionalImg: string = '';
+    // @State() professionalImg: string = '';
 
-    componentDidLoad(): void {
-        imageHandler(this.professional.picture)
-            .then((resizedImg) => this.professionalImg = resizedImg);
-    }
+    // componentDidLoad(): void {
+    //     imageHandler(this.professional.picture)
+    //         .then((resizedImg) => this.professionalImg = resizedImg);
+    // }
 
     /**
      * @description Renders a list of all schedules made by the user so far,
@@ -54,9 +56,9 @@ export class SchedulesOverview {
     private getFormattedDate(dateParam: Date): JSX.Element {
         const date = new Date(dateParam);
 
-        const week = date.toLocaleDateString('en-US', { weekday: 'long' });
+        const week = date.toLocaleDateString(this.language, { weekday: 'long' });
         const day = date.getDate();
-        const month = date.toLocaleDateString('en-US', { month: 'long' });
+        const month = date.toLocaleDateString(this.language, { month: 'long' });
         const year = date.getFullYear();
 
         return (
@@ -70,9 +72,9 @@ export class SchedulesOverview {
     private getFormattedTime(dateParam: Date): JSX.Element {
         const date = new Date(dateParam);
 
-        const startTime = date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        const startTime = date.toLocaleTimeString(this.language, { hour12: false, hour: '2-digit', minute: '2-digit' });
         date.setHours(date.getHours() + 1);
-        const endTime = date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        const endTime = date.toLocaleTimeString(this.language, { hour12: false, hour: '2-digit', minute: '2-digit' });
 
         return (
             <div class="time-view">
@@ -82,34 +84,33 @@ export class SchedulesOverview {
     }
 
     private renderListInfo(): JSX.Element {
-        if (this.scheduling.schedules.length > 1 && this.hiddenOverview) {
+        if (this.hiddenOverview) {
             return (
-                <label>
-                    <div>
-                        Schedules <span class="schedules-count">{this.scheduling.schedules.length}</span>
-                    </div>
-                </label>
+                <div class="icon-ctrl">
+                    &lang;
+                    <span></span>
+                </div>
             );
-        } else if (!this.hiddenOverview) {
-            return <label>Hide</label>;
+        } else {
+            return <div class="icon-ctrl">&rang;</div>;
         }
     }
 
-    private renderCustomDate(schedules = this.scheduling.schedules): JSX.Element {
-        const lastSchedule = schedules[schedules.length - 1];
+    // private renderCustomDate(schedules = this.scheduling.schedules): JSX.Element {
+    //     const lastSchedule = schedules[schedules.length - 1];
 
-        return (
-            <div class="date-time-container">
-                {this.getFormattedDate(lastSchedule)}
-                <div style={{ paddingTop: '17px' }}>
-                    {this.getFormattedTime(lastSchedule)}
-                </div>
-            </div>
-        );
-    }
+    //     return (
+    //         <div class="date-time-container">
+    //             {this.getFormattedDate(lastSchedule)}
+    //             <div style={{ paddingTop: '17px' }}>
+    //                 {this.getFormattedTime(lastSchedule)}
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     private hideAndShowOverview(): void {
-        if (this.scheduling.schedules.length > 1) {
+        if (this.scheduling.schedules.length > 0) {
             this.hiddenOverview = !this.hiddenOverview;
         }
     }
@@ -121,16 +122,15 @@ export class SchedulesOverview {
                 <header onClick={() => this.hideAndShowOverview()}>
 
                     <figure class="overview">
-                        <img src={this.professionalImg} />
+                        <img src={this.professional.picture} />
                     </figure>
 
                     <div class="last-schedule">
-                        <div style={(!this.hiddenOverview || !this.scheduling.schedules.length) && { paddingTop: '17px' }}>
+                        <div>
                             {this.professional.name}
                         </div>
 
                         {this.scheduling.schedules.length > 0 && this.renderListInfo()}
-                        {(this.hiddenOverview && this.scheduling.schedules.length > 0) && this.renderCustomDate()}
                     </div>
 
                 </header>

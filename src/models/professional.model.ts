@@ -1,5 +1,5 @@
 export class Professional {
     id: string = null;
-    picture: ArrayBuffer = null;
+    picture: string = null;
     name: string = null;
 }
