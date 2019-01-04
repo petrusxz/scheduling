@@ -52,7 +52,7 @@
 .week-days .date-number {
   background-color: #ececec;
   color: #586268;
-  min-width: 20px;
+  width: 20px;
   padding: 4px;
   border-radius: 50%;
 }
