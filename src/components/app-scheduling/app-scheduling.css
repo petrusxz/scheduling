@@ -48,7 +48,7 @@ button[disabled] {
 .app-container {
   display: block;
   margin: auto;
-  min-width: 300px;
+  min-width: 280px;
   max-width: 400px;
 }
 
@@ -61,15 +61,7 @@ button[disabled] {
   border: 1px solid #e4e6e5;
   border-radius: 4px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-}
-
-.confirm {
-  display: block;
-  float: right;
-  background-color: #a369f9;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
+  animation: fade-in-top .4s ease-in forwards;
 }
 
 .professional {
@@ -88,4 +80,43 @@ button[disabled] {
 .selected {
   background-color: #6d94b2 !important;
   color: #f7f7f7 !important;
+}
+
+@keyframes fade-in-top {
+  from {
+    transform: translateY(-44px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-left {
+  0% {
+    transform: translateX(1rem);
+    opacity: 0;
+  }
+
+  50% {
+    transform: translateX(.5rem);
+    opacity: .5;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

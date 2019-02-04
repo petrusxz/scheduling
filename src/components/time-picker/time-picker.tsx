@@ -23,7 +23,7 @@ export class TimePicker {
 
     render(): JSX.Element {
         return (
-            <div class="picker-container">
+            <div class="picker-container time">
                 {this.availableTimes.length
                     ? this.availableTimes.map((date) =>
                         <div

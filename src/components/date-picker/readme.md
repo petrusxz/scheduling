@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property   | Attribute  | Description | Type     |
+| ---------- | ---------- | ----------- | -------- |
+| `language` | `language` |             | `string` |
+
+
 ## Events
 
 | Event           | Detail | Description |

@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type               |
-| ---------------- | --------- | ----------- | ------------------ |
-| `schedulingData` | --        |             | `SchedulingData[]` |
+| Property            | Attribute  | Description | Type             |
+| ------------------- | ---------- | ----------- | ---------------- |
+| `language`          | `language` |             | `string`         |
+| `schedulingData`    | --         |             | `SchedulingData` |
+| `selectedSchedules` | --         |             | `Date[]`         |
 
 
 ## Events

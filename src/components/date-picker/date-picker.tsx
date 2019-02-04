@@ -88,7 +88,9 @@ export class DatePicker {
                         disabled={this.isCurrentWeek()}
                         class="week-days-ctrl"
                         onClick={() => this.previousWeek()}>
-                        &lang;
+                        <b>
+                            &lang;
+                        </b>
                     </button>
 
                     {this.days.map((day) =>
@@ -109,7 +111,9 @@ export class DatePicker {
                     <button
                         class="week-days-ctrl"
                         onClick={() => this.nextWeek()}>
-                        &rang;
+                        <b>
+                            &rang;
+                        </b>
                     </button>
                 </div>
             </div>

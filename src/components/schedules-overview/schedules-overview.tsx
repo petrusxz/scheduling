@@ -1,7 +1,6 @@
 import { Component, Prop, State } from '@stencil/core';
 import { Professional } from '../../models/professional.model';
 import { SchedulingResponse } from '../../models/scheduling-response.model';
-// import { imageHandler } from '../../utils/image-handler';
 
 /**
  * @description Overview of the user full scheduling.
@@ -19,12 +18,6 @@ export class SchedulesOverview {
     @Prop({ mutable: true }) scheduling: SchedulingResponse = null;
 
     @State() hiddenOverview: boolean = true;
-    // @State() professionalImg: string = '';
-
-    // componentDidLoad(): void {
-    //     imageHandler(this.professional.picture)
-    //         .then((resizedImg) => this.professionalImg = resizedImg);
-    // }
 
     /**
      * @description Renders a list of all schedules made by the user so far,
@@ -83,32 +76,6 @@ export class SchedulesOverview {
         );
     }
 
-    private renderListInfo(): JSX.Element {
-        if (this.hiddenOverview) {
-            return (
-                <div class="icon-ctrl">
-                    &lang;
-                    <span></span>
-                </div>
-            );
-        } else {
-            return <div class="icon-ctrl">&rang;</div>;
-        }
-    }
-
-    // private renderCustomDate(schedules = this.scheduling.schedules): JSX.Element {
-    //     const lastSchedule = schedules[schedules.length - 1];
-
-    //     return (
-    //         <div class="date-time-container">
-    //             {this.getFormattedDate(lastSchedule)}
-    //             <div style={{ paddingTop: '17px' }}>
-    //                 {this.getFormattedTime(lastSchedule)}
-    //             </div>
-    //         </div>
-    //     );
-    // }
-
     private hideAndShowOverview(): void {
         if (this.scheduling.schedules.length > 0) {
             this.hiddenOverview = !this.hiddenOverview;
@@ -130,7 +97,15 @@ export class SchedulesOverview {
                             {this.professional.name}
                         </div>
 
-                        {this.scheduling.schedules.length > 0 && this.renderListInfo()}
+                        {this.scheduling.schedules.length > 0 && 
+                        <div class={{
+                            'icon-ctrl': true,
+                            'open': !this.hiddenOverview
+                        }}>
+                            &lang;
+                            <span hidden={!this.hiddenOverview}></span>
+                        </div>
+                        }
                     </div>
 
                 </header>

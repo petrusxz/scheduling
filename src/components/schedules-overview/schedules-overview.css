@@ -20,6 +20,11 @@
     font-size: 1.2em;
     transform: rotate(-90deg);
     font-weight: bold;
+    transition: .4s ease-in-out;
+}
+
+.last-schedule .icon-ctrl.open {
+    transform: rotate(90deg);
 }
 
 .last-schedule .icon-ctrl span {
@@ -81,4 +86,10 @@ figure.overview {
     color: #586268;
     text-align: right;
     width: 100%;
+}
+
+@media (max-width: 320px) {
+    .last-schedule {
+        width: 78%;
+    }
 }

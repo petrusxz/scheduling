@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type                 |
-| -------------- | --------- | ----------- | -------------------- |
-| `professional` | --        |             | `Professional`       |
-| `scheduling`   | --        |             | `SchedulingResponse` |
+| Property       | Attribute  | Description | Type                 |
+| -------------- | ---------- | ----------- | -------------------- |
+| `language`     | `language` |             | `string`             |
+| `professional` | --         |             | `Professional`       |
+| `scheduling`   | --         |             | `SchedulingResponse` |
 
 
 ----------------------------------------------

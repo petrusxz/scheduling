@@ -27,14 +27,17 @@
   height: 52px;
   width: 28px;
   line-height: 52px;
+  font-size: 20px;
 }
 
 .week-days-ctrl:first-child {
   left: -12px;
+  text-align: left;
 }
 
 .week-days-ctrl:last-child {
   right: -12px;
+  text-align: right;
 }
 
 .week-days {
@@ -60,4 +63,10 @@
 .week-days .readonly {
   background-color: unset;
   color: #a0a2a4;
+}
+
+@media (max-width: 320px) {
+  .week-days {
+    padding: 0 1%;
+  }
 }
